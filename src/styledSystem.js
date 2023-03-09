@@ -25,7 +25,7 @@ export const Root = styled.div`
 		rgba(127, 110, 96, 1) 35%,
 		rgba(178, 146, 115, 1) 100%
 	);
-	padding-top: 5%;
+	padding-top: 3%;
 	width: 100vw;
 	height: 100vh;
 `;
@@ -83,6 +83,7 @@ export const Button = styled.button`
 	background: #af6544;
 	cursor: pointer;
 	transition: all linear 0.5s;
+	width: 100%;
 	:disabled {
 		cursor: not-allowed;
 		opacity: 0.7;
@@ -104,4 +105,43 @@ export const DeleteBtn = styled(Delete)`
 	color: rgba(178, 146, 115, 1);
 	margin: 3px;
 	cursor: pointer;
+`;
+
+export const Content = styled.div`
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	background: rgb(22, 31, 37);
+	background: linear-gradient(
+		20deg,
+		rgba(22, 31, 37, 1) 0%,
+		rgba(89, 76, 67, 1) 100%
+	);
+	position: relative;
+	height: 90vh;
+	padding: 70px 15px 0;
+
+	@media (max-width: 768px) {
+		height: 33vh;
+		border-radius: 15px 15px 0 0;
+	}
+`;
+
+export const Logo = styled.div`
+	position: absolute;
+	border-radius: 9px;
+	top: -10px;
+	right: -10px;
+	margin-left: auto;
+	background: #af6544;
+	width: 85%;
+	padding: 15px 0;
+`;
+
+export const FilterMedia = styled.div`
+	display: flex;
+	flex-direction: column;
+	@media (max-width: 768px) {
+		flex-direction: row;
+		gap: 1em;
+	}
 `;

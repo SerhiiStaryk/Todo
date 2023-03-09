@@ -16,11 +16,11 @@ const initialState = {
 
 const reducer = createReducer(
 	{
-		[actions.addTodo]: (state) => {
+		[actions.addTodo]: (state, payload) => {
 			const newItem = {
 				userId: 1,
 				id: nanoid(),
-				title: state.title,
+				title: payload,
 				completed: false,
 			};
 
@@ -39,11 +39,11 @@ const reducer = createReducer(
 				};
 			}
 		},
-		[actions.editTodo]: (state) => {
+		[actions.editTodo]: (state, payload) => {
 			const newList = [...state.items];
 			const index = R.indexOf(state.item, newList);
 			if (index !== -1) {
-				newList[index].title = state.title;
+				newList[index].title = payload;
 				return {
 					...state,
 					title: '',
