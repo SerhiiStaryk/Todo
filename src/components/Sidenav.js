@@ -4,8 +4,6 @@ import { Button, Text, Flex } from '../styledSystem';
 import Checkbox from './Checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../store/actions/action';
-import { Formik, Form, ErrorMessage, Field } from 'formik';
-import * as Yup from 'yup';
 
 const Content = styled.div`
 	border-top-left-radius: 15px;
@@ -82,12 +80,6 @@ const Sidenav = () => {
 		dispatch(actions.addTodo());
 	};
 
-	// const titleSchema = Yup.object().shape({
-	// 	title: Yup.string()
-	// 		.min(4, 'Title is too short - should be 4 chars min')
-	// 		// .max(50, 'Title is too long - should be 50 chars long'),
-	// });
-
 	return (
 		<Content>
 			<Logo>
@@ -95,46 +87,6 @@ const Sidenav = () => {
 					TODO
 				</Text>
 			</Logo>
-			{/* ------------------------------------------FORMIK-------------------------------------------------------------------------- */}
-			{/* <Formik
-				initialValues={{
-					title:''
-				}}
-				validationSchema={titleSchema}
-				onSubmit={(value) => {
-					console.log(value)
-					createTodo();
-				}}
-			>
-				{(formik) => {
-					const { errors, touched, isValid, dirty } = formik;
-
-					console.log(formik)
-					// console.log(errors);
-					// console.log(touched);
-					// console.log(isValid);
-					// console.log(dirty);
-					
-					return (
-						<Form>
-							<Flex flexDirection={'column'}>
-								<ErrorMessage name='title' component='span' className='error' />
-								<Label htmlFor='title'>New Todo</Label>
-								<Field
-									id='title'
-									name='title'
-									placeholder='Type...'
-									onChange={handleInputChange}
-								/>
-								<Button disabled={!title.length} type='submit'>
-									{edit ? 'Edit' : 'Add'}
-								</Button>
-							</Flex>
-						</Form>
-					);
-				}}
-			</Formik> */}
-			{/* ------------------------------------------------------------------------------------ */}
 			<Flex flexDirection={'column'}>
 				<Label htmlFor='title'>
 					<Text>New Todo</Text>
