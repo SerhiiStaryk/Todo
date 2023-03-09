@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { Flex, Text } from '../styledSystem';
 import ToDoItem from './ToDoItem';
 import { useSelector, useDispatch } from 'react-redux';
-
 import React from 'react';
 import { actions } from '../store/actions/action';
+import * as R from 'ramda';
+import { filteredTodosSelector } from '../store/selectors/selector';
 
-const Content = styled.section`
+const TodoContainer = styled.section`
 	border-top-right-radius: 15px;
 	border-bottom-right-radius: 15px;
 	background: rgb(23, 31, 38);
@@ -40,40 +41,26 @@ const TodoListBox = styled.div`
 
 const TodoList = () => {
 	const dispatch = useDispatch();
-	const todos = useSelector((state) => state.items);
-	const filter = useSelector((state) => state.filters);
+	const todos = useSelector(filteredTodosSelector);
 
-	let filteredTodos = [];
-
-	if (filter.completed && !filter.inProgress) {
-		filteredTodos = todos.filter((todo) => todo.completed);
-	} else if (filter.inProgress && !filter.completed) {
-		filteredTodos = todos.filter((todo) => !todo.completed);
-	}
-
-	const createEl = () => {
-		if (filteredTodos.length) {
-			return filteredTodos.map((item) => (
-				<ToDoItem key={item.id} todo={item} />
-			));
-		} else {
-			return todos.map((item) => <ToDoItem key={item.id} todo={item} />);
-		}
-	};
-
+	const createEl = () =>
+		R.map((item) => <ToDoItem key={item.id} todo={item} />, todos);
 	React.useEffect(() => {
 		dispatch(actions.fetchTodosReguest());
 	}, [dispatch]);
 
 	return (
-		<Content>
+		<TodoContainer>
 			<Flex justifyContent={'center'} alignItems={'center'}>
 				<TodoListBox>
-					<Text textAlign='right' color={'blacks.3'} fontSize={[0, 1, 2, 3]}>
+					<Text
+						textAlign='right'
+						color={'blacks.3'}
+						fontSize={[0, 1, 2, 3]}
+						marginBottom='15px'
+					>
 						Todo list...
 					</Text>
-					<br />
-					{/* Спростити якось) */}
 					{todos.length ? (
 						createEl()
 					) : (
@@ -83,7 +70,7 @@ const TodoList = () => {
 					)}
 				</TodoListBox>
 			</Flex>
-		</Content>
+		</TodoContainer>
 	);
 };
 

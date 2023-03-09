@@ -145,3 +145,13 @@ export const FilterMedia = styled.div`
 		gap: 1em;
 	}
 `;
+
+export const MainContainer = styled.div`
+	width: 75%;
+	box-shadow: -28px 38px 48px 9px rgba(0, 0, 0, 0.7);
+	border-radius: 15px;
+
+	@media (max-width: 768px) {
+		width: 95%;
+	}
+`;

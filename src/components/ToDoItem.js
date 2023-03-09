@@ -6,7 +6,6 @@ import { actions } from '../store/actions/action';
 
 const ToDoItem = ({ todo }) => {
 	const dispatch = useDispatch();
-
 	const edit = useSelector((state) => state.edit);
 
 	return (

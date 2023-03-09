@@ -59,7 +59,6 @@ const Sidenav = () => {
 				enableReinitialize={true}
 			>
 				{(props) => {
-					console.log('props', props)
 					return (
 						<Form>
 							<Input
@@ -77,7 +76,7 @@ const Sidenav = () => {
 			</Formik>
 
 			<Flex flexDirection={'column'}>
-				<Text color={'#fff'} margin={'0 0 10px'}>
+				<Text color={'whites.7'} margin={'0 0 10px'}>
 					Filter:
 				</Text>
 				<FilterMedia>
