@@ -1,16 +1,16 @@
 import './App.css';
 import { ThemeProvider } from 'styled-components';
-import theme from './theme';
 import { Flex, Root } from './styledSystem';
-import Main from './components/Main';
 import { Provider } from 'react-redux';
+import { compose, createStore, applyMiddleware } from 'redux';
+import { sagaWatcher } from './store/saga';
+import theme from './theme';
+import Main from './components/Main';
 import reducer from './store/reducers/reducer';
 import thunk from 'redux-thunk';
-import { compose, createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from '@redux-saga/core';
-import { sagaWatcher } from './store/saga';
 
-const saga = createSagaMiddleware()
+const saga = createSagaMiddleware();
 
 const store = createStore(
 	reducer,
@@ -20,7 +20,7 @@ const store = createStore(
 	)
 );
 
-saga.run(sagaWatcher)
+saga.run(sagaWatcher);
 
 function App() {
 	return (

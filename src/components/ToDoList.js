@@ -2,11 +2,13 @@ import styled from 'styled-components';
 import { Flex, Text } from '../styledSystem';
 import ToDoItem from './ToDoItem';
 import { useSelector, useDispatch } from 'react-redux';
-
 import React from 'react';
 import { actions } from '../store/actions/action';
+import * as R from 'ramda';
+import { filteredTodosSelector } from '../store/selectors/selector';
+import Spinner from './Spinner';
 
-const Content = styled.section`
+const TodoContainer = styled.section`
 	border-top-right-radius: 15px;
 	border-bottom-right-radius: 15px;
 	background: rgb(23, 31, 38);
@@ -15,7 +17,7 @@ const Content = styled.section`
 		rgba(23, 31, 38, 1) 0%,
 		rgba(89, 76, 67, 1) 70%
 	);
-	height: 75vh;
+	height: 90vh;
 	padding-top: 3%;
 
 	@media (max-width: 768px) {
@@ -26,63 +28,57 @@ const Content = styled.section`
 
 const TodoListBox = styled.div`
 	padding: 15px;
-	height: 70vh;
-	width: 85%;
+	height: 85vh;
+	width: 90%;
 	background: linear-gradient(0deg, #a8b0b3 0%, #f9e9d1 73%);
 	border-radius: 10px 5px 5px 10px;
 	overflow: auto;
 
 	@media (max-width: 768px) {
 		height: 50vh;
+		width: 95%;
 	}
 `;
 
 const TodoList = () => {
 	const dispatch = useDispatch();
-	const todos = useSelector((state) => state.items);
-	const filter = useSelector((state) => state.filters);
-
-	let filteredTodos = [];
-
-	if (filter.completed && !filter.inProgress) {
-		filteredTodos = todos.filter((todo) => todo.completed);
-	} else if (filter.inProgress && !filter.completed) {
-		filteredTodos = todos.filter((todo) => !todo.completed);
-	}
-
-	const createEl = () => {
-		if (filteredTodos.length) {
-			return filteredTodos.map((item) => (
-				<ToDoItem key={item.id} todo={item} />
-			));
-		} else {
-			return todos.map((item) => <ToDoItem key={item.id} todo={item} />);
-		}
-	};
+	const todos = useSelector(filteredTodosSelector);
+	const spinner = useSelector((state) => state.showSpinner);
 
 	React.useEffect(() => {
 		dispatch(actions.fetchTodosReguest());
 	}, [dispatch]);
 
 	return (
-		<Content>
-			<Flex justifyContent={'center'} alignItems={'center'}>
+		<TodoContainer>
+			<Flex justifyContent='center'>
 				<TodoListBox>
-					<Text textAlign='right' color={'blacks.3'} fontSize={[0, 1, 2, 3]}>
+					<Text
+						textAlign='right'
+						color={'blacks.3'}
+						fontSize={[0, 1, 2, 3]}
+						marginBottom='15px'
+					>
 						Todo list...
 					</Text>
-					<br />
-					{/* Спростити якось) */}
-					{todos.length ? (
-						createEl()
+					{spinner ? (
+						<Flex justifyContent='center'>
+							<Spinner />
+						</Flex>
 					) : (
-						<Text textAlign='center' color={'blacks.3'}>
-							Empty list
-						</Text>
+						<>
+							{todos.length ? (
+								R.map((item) => <ToDoItem key={item.id} todo={item} />, todos)
+							) : (
+								<Text textAlign='center' color={'blacks.3'}>
+									Empty list
+								</Text>
+							)}
+						</>
 					)}
 				</TodoListBox>
 			</Flex>
-		</Content>
+		</TodoContainer>
 	);
 };
 

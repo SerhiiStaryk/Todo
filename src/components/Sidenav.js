@@ -1,52 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Button, Text, Flex } from '../styledSystem';
+import {
+	Button,
+	Text,
+	Flex,
+	Content,
+	Logo,
+	FilterMedia,
+} from '../styledSystem';
 import Checkbox from './Checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../store/actions/action';
-
-const Content = styled.div`
-	border-top-left-radius: 15px;
-	border-bottom-left-radius: 15px;
-	background: rgb(22, 31, 37);
-	background: linear-gradient(
-		20deg,
-		rgba(22, 31, 37, 1) 0%,
-		rgba(89, 76, 67, 1) 100%
-	);
-	position: relative;
-	height: 75vh;
-	padding: 70px 15px 0;
-
-	@media (max-width: 768px) {
-		height: 35vh;
-		border-radius: 15px 15px 0 0;
-	}
-`;
-
-const Logo = styled.div`
-	position: absolute;
-	border-radius: 9px;
-	top: -10px;
-	right: -10px;
-	margin-left: auto;
-	background: #af6544;
-	width: 85%;
-	padding: 15px 0;
-`;
-
-const InputText = styled.input.attrs({ type: 'text' })`
-	padding: 1em;
-	background: papayawhip;
-	border: none;
-	border-radius: 3px;
-`;
-
-const Label = styled.label`
-	display: inline-block;
-	margin-bottom: 10px;
-	color: #fff;
-`;
+import { Formik, Form } from 'formik';
+import titleSchema from '../schemas/titleSchema';
+import Input from './Input';
 
 const Sidenav = () => {
 	const dispatch = useDispatch();
@@ -54,10 +20,6 @@ const Sidenav = () => {
 	const filters = useSelector((state) => state.filters);
 	const title = useSelector((state) => state.title);
 	const edit = useSelector((state) => state.edit);
-
-	const handleInputChange = (event) => {
-		dispatch(actions.setTitle(event.target.value));
-	};
 
 	const handleCheckbox = (name) => {
 		const newFilter = { ...filters };
@@ -72,12 +34,14 @@ const Sidenav = () => {
 		dispatch(actions.setFilters(newFilter));
 	};
 
-	const createTodo = () => {
+	const onSubmit = (value, action) => {
+		console.log(value);
 		if (edit) {
-			dispatch(actions.editTodo());
+			dispatch(actions.editTodo(value.todoTitle));
 			return;
 		}
-		dispatch(actions.addTodo());
+		dispatch(actions.addTodo(value.todoTitle));
+		action.resetForm();
 	};
 
 	return (
@@ -87,37 +51,48 @@ const Sidenav = () => {
 					TODO
 				</Text>
 			</Logo>
-			<Flex flexDirection={'column'}>
-				<Label htmlFor='title'>
-					<Text>New Todo</Text>
-				</Label>
-				<InputText
-					id='title'
-					placeholder={'Type...'}
-					value={title}
-					onChange={handleInputChange}
-				/>
-				<Button disabled={!title.length} onClick={() => createTodo()}>
-					{edit ? 'Edit' : 'Add'}
-				</Button>
-			</Flex>
+
+			<Formik
+				initialValues={{ todoTitle: `${title}` }}
+				validationSchema={titleSchema}
+				onSubmit={onSubmit}
+				enableReinitialize={true}
+			>
+				{(props) => {
+					return (
+						<Form>
+							<Input
+								label='New Todo'
+								name='todoTitle'
+								type='text'
+								placeholder='Type todo title...'
+							></Input>
+							<Button disabled={props.isValid && props.isValidating} type='submit'>
+								{edit ? 'Save' : 'Add new todo'}
+							</Button>
+						</Form>
+					);
+				}}
+			</Formik>
 
 			<Flex flexDirection={'column'}>
-				<Text color={'#fff'} margin={'0 0 10px'}>
-					Filter
+				<Text color={'whites.7'} margin={'0 0 10px'}>
+					Filter:
 				</Text>
-				<Checkbox
-					id='completed'
-					text='Completed'
-					checked={filters.completed}
-					handleCheckboxChange={() => handleCheckbox('completed')}
-				/>
-				<Checkbox
-					id='inProgress'
-					text='In Progress'
-					checked={filters.setInProgress}
-					handleCheckboxChange={() => handleCheckbox('inProgress')}
-				/>
+				<FilterMedia>
+					<Checkbox
+						id='completed'
+						text='Completed'
+						checked={filters.completed}
+						handleCheckboxChange={() => handleCheckbox('completed')}
+					/>
+					<Checkbox
+						id='inProgress'
+						text='In Progress'
+						checked={filters.setInProgress}
+						handleCheckboxChange={() => handleCheckbox('inProgress')}
+					/>
+				</FilterMedia>
 			</Flex>
 		</Content>
 	);

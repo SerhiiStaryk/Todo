@@ -3,11 +3,17 @@ import { Box, Text, Flex, EditBtn, DeleteBtn } from '../styledSystem';
 import { useDispatch, useSelector } from 'react-redux';
 import Checkbox from './Checkbox';
 import { actions } from '../store/actions/action';
+import ConfirmationModal from './ConfirmModal';
 
 const ToDoItem = ({ todo }) => {
 	const dispatch = useDispatch();
-
 	const edit = useSelector((state) => state.edit);
+	const showModal = useSelector((state) => state.showModal);
+	
+	const openConfirm = () => {
+		dispatch(actions.showModal(true));
+		dispatch(actions.setItem(todo));
+	};
 
 	return (
 		<Box
@@ -34,11 +40,14 @@ const ToDoItem = ({ todo }) => {
 							{!todo.completed && (
 								<EditBtn onClick={() => dispatch(actions.setEdit(todo))} />
 							)}
-							<DeleteBtn onClick={() => dispatch(actions.deleteTodo(todo))} />
+							<DeleteBtn onClick={openConfirm} />
 						</Flex>
 					)}
 				</Box>
 			</Flex>
+			{showModal && (
+				<ConfirmationModal message='Are you sure you want to delete this item?' />
+			)}
 		</Box>
 	);
 };

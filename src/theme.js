@@ -7,21 +7,7 @@ const theme = {
 		sansSerif: 'helvetica neue", helvetica, ubuntu, roboto, noto, sans-serif',
 	},
 	lineHeights: [1.5, 1.8, 2, 2.5],
-	borders: [
-		0,
-		'2px solid',
-		'4px solid',
-		'6px solid',
-		'8px solid',
-		'10px solid',
-	],
-	radii: [0, 2, 4, 6, 8, 10, 12, 16],
 	colors: {
-		info: '#1ecbe1',
-		primary: '#1676e9',
-		danger: '#e72918',
-		success: '#6bc33c',
-		warning: '#fff900',
 		blacks: [
 			'rgba(0,0,0)',
 			'rgba(0,0,0,.1)',
