@@ -6,6 +6,7 @@ import React from 'react';
 import { actions } from '../store/actions/action';
 import * as R from 'ramda';
 import { filteredTodosSelector } from '../store/selectors/selector';
+import Spinner from './Spinner';
 
 const TodoContainer = styled.section`
 	border-top-right-radius: 15px;
@@ -20,7 +21,7 @@ const TodoContainer = styled.section`
 	padding-top: 3%;
 
 	@media (max-width: 768px) {
-		height: 63vh;
+		height: 55vh;
 		border-radius: 0 0 15px 15px;
 	}
 `;
@@ -28,13 +29,13 @@ const TodoContainer = styled.section`
 const TodoListBox = styled.div`
 	padding: 15px;
 	height: 85vh;
-	width: 85%;
+	width: 90%;
 	background: linear-gradient(0deg, #a8b0b3 0%, #f9e9d1 73%);
 	border-radius: 10px 5px 5px 10px;
 	overflow: auto;
 
 	@media (max-width: 768px) {
-		height: 59vh;
+		height: 50vh;
 		width: 95%;
 	}
 `;
@@ -42,16 +43,18 @@ const TodoListBox = styled.div`
 const TodoList = () => {
 	const dispatch = useDispatch();
 	const todos = useSelector(filteredTodosSelector);
+	const spinner = useSelector((state) => state.showSpinner);
 
 	const createEl = () =>
 		R.map((item) => <ToDoItem key={item.id} todo={item} />, todos);
+
 	React.useEffect(() => {
 		dispatch(actions.fetchTodosReguest());
 	}, [dispatch]);
 
 	return (
 		<TodoContainer>
-			<Flex justifyContent={'center'} alignItems={'center'}>
+			<Flex justifyContent='center'>
 				<TodoListBox>
 					<Text
 						textAlign='right'
@@ -61,12 +64,20 @@ const TodoList = () => {
 					>
 						Todo list...
 					</Text>
-					{todos.length ? (
-						createEl()
+					{spinner ? (
+						<Flex justifyContent='center'>
+							<Spinner />
+						</Flex>
 					) : (
-						<Text textAlign='center' color={'blacks.3'}>
-							Empty list
-						</Text>
+						<>
+							{todos.length ? (
+								createEl()
+							) : (
+								<Text textAlign='center' color={'blacks.3'}>
+									Empty list
+								</Text>
+							)}
+						</>
 					)}
 				</TodoListBox>
 			</Flex>

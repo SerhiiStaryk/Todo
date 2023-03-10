@@ -12,6 +12,8 @@ const initialState = {
 		completed: false,
 		inProgress: false,
 	},
+	showModal: false,
+	showSpinner: false,
 };
 
 const reducer = createReducer(
@@ -30,15 +32,11 @@ const reducer = createReducer(
 				title: '',
 			};
 		},
-		[actions.deleteTodo]: (state, payload) => {
-			// eslint-disable-next-line no-restricted-globals
-			if (confirm('Are you sure you want to delete this item?')) {
-				return {
-					...state,
-					items: R.filter((item) => item.id !== payload.id, state.items),
-				};
-			}
-		},
+		[actions.deleteTodo]: (state, payload) => ({
+			...state,
+			items: R.filter((item) => item.id !== payload.id, state.items),
+			item: {},
+		}),
 		[actions.editTodo]: (state, payload) => {
 			const newList = [...state.items];
 			const index = R.indexOf(state.item, newList);
@@ -84,6 +82,30 @@ const reducer = createReducer(
 			}
 			return {
 				...state,
+			};
+		},
+		[actions.showModal]: (state) => {
+			return {
+				...state,
+				showModal: true,
+			};
+		},
+		[actions.hideModal]: (state) => {
+			return {
+				...state,
+				showModal: false,
+			};
+		},
+		[actions.setItem]: (state, payload) => {
+			return {
+				...state,
+				item: payload,
+			};
+		},
+		[actions.setSpinner]: (state, payload) => {
+			return {
+				...state,
+				showSpinner: payload,
 			};
 		},
 	},

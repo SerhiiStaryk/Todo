@@ -51,7 +51,7 @@ export const GridColumns = styled.div`
 	}
 `;
 
-export const Text = styled.div`
+export const Text = styled.p`
 	${typography};
 	${color}
 	${margin}
@@ -121,7 +121,7 @@ export const Content = styled.div`
 	padding: 70px 15px 0;
 
 	@media (max-width: 768px) {
-		height: 33vh;
+		height: 40vh;
 		border-radius: 15px 15px 0 0;
 	}
 `;

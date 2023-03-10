@@ -8,3 +8,9 @@ export const SET_TITLE = 'SET_TITLE';
 export const SET_EDIT = 'SET_EDIT';
 export const SET_FILTERS = 'SET_FILTERS';
 export const SET_COMPLETED = 'SET_COMPLETED';
+
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+export const SET_ITEM = 'SET_ITEM';
+
+export const SET_SPINNER = 'SET_SPINNER';
