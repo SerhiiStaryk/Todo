@@ -45,9 +45,6 @@ const TodoList = () => {
 	const todos = useSelector(filteredTodosSelector);
 	const spinner = useSelector((state) => state.showSpinner);
 
-	const createEl = () =>
-		R.map((item) => <ToDoItem key={item.id} todo={item} />, todos);
-
 	React.useEffect(() => {
 		dispatch(actions.fetchTodosReguest());
 	}, [dispatch]);
@@ -71,7 +68,7 @@ const TodoList = () => {
 					) : (
 						<>
 							{todos.length ? (
-								createEl()
+								R.map((item) => <ToDoItem key={item.id} todo={item} />, todos)
 							) : (
 								<Text textAlign='center' color={'blacks.3'}>
 									Empty list

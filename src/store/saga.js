@@ -8,8 +8,10 @@ export function* sagaWatcher() {
 
 function* sagaWorker() {
 	try {
+		yield put(actions.setSpinner(true))
 		const todos = yield call(fetchTodo);
 		yield put(actions.fetchTodosSuccess(todos));
+		yield put(actions.setSpinner(false))
 	} catch (error) {
 		yield put(actions.fetchTodosFailure(error))
 	}

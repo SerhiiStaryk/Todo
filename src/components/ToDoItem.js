@@ -10,9 +10,9 @@ const ToDoItem = ({ todo }) => {
 	const edit = useSelector((state) => state.edit);
 	const showModal = useSelector((state) => state.showModal);
 	
-	const handleDelete = () => {
+	const openConfirm = () => {
 		dispatch(actions.showModal(true));
-		dispatch(actions.setItem(todo))
+		dispatch(actions.setItem(todo));
 	};
 
 	return (
@@ -40,7 +40,7 @@ const ToDoItem = ({ todo }) => {
 							{!todo.completed && (
 								<EditBtn onClick={() => dispatch(actions.setEdit(todo))} />
 							)}
-							<DeleteBtn onClick={handleDelete} />
+							<DeleteBtn onClick={openConfirm} />
 						</Flex>
 					)}
 				</Box>
