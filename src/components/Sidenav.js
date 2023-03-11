@@ -23,19 +23,12 @@ const Sidenav = () => {
 
 	const handleCheckbox = (name) => {
 		const newFilter = { ...filters };
-		if (name === 'inProgress') {
-			newFilter.inProgress = !filters.inProgress;
-		}
-
-		if (name === 'completed') {
-			newFilter.completed = !filters.completed;
-		}
+		newFilter[name] = !filters[name]
 
 		dispatch(actions.setFilters(newFilter));
 	};
 
 	const onSubmit = (value, action) => {
-		console.log(value);
 		if (edit) {
 			dispatch(actions.editTodo(value.todoTitle));
 			return;

@@ -7,7 +7,6 @@ import { sagaWatcher } from './store/saga';
 import theme from './theme';
 import Main from './components/Main';
 import reducer from './store/reducers/reducer';
-import thunk from 'redux-thunk';
 import createSagaMiddleware from '@redux-saga/core';
 
 const saga = createSagaMiddleware();
@@ -15,7 +14,7 @@ const saga = createSagaMiddleware();
 const store = createStore(
 	reducer,
 	compose(
-		applyMiddleware(thunk, saga),
+		applyMiddleware(saga),
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	)
 );
