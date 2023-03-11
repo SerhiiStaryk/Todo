@@ -5,7 +5,6 @@ import { createReducer } from 'redux-act';
 
 const initialState = {
 	items: [],
-	title: '',
 	item: {},
 	edit: false,
 	filters: {
@@ -44,7 +43,6 @@ const reducer = createReducer(
 				newList[index].title = payload;
 				return {
 					...state,
-					title: '',
 					item: {},
 					edit: false,
 					items: newList,
@@ -57,7 +55,6 @@ const reducer = createReducer(
 		},
 		[actions.setEdit]: (state, payload) => ({
 			...state,
-			title: payload.title,
 			item: payload,
 			edit: true,
 		}),

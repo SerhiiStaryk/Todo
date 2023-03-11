@@ -13,17 +13,18 @@ import { actions } from '../store/actions/action';
 import { Formik, Form } from 'formik';
 import titleSchema from '../schemas/titleSchema';
 import Input from './Input';
+import { titleSelector } from '../store/selectors/selector';
 
 const Sidenav = () => {
 	const dispatch = useDispatch();
 
 	const filters = useSelector((state) => state.filters);
-	const title = useSelector((state) => state.title);
 	const edit = useSelector((state) => state.edit);
+	const title = useSelector(titleSelector);
 
 	const handleCheckbox = (name) => {
 		const newFilter = { ...filters };
-		newFilter[name] = !filters[name]
+		newFilter[name] = !filters[name];
 
 		dispatch(actions.setFilters(newFilter));
 	};
@@ -60,7 +61,10 @@ const Sidenav = () => {
 								type='text'
 								placeholder='Type todo title...'
 							></Input>
-							<Button disabled={props.isValid && props.isValidating} type='submit'>
+							<Button
+								disabled={props.isValid && props.isValidating}
+								type='submit'
+							>
 								{edit ? 'Save' : 'Add new todo'}
 							</Button>
 						</Form>

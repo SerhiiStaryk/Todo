@@ -2,14 +2,15 @@ import React from 'react';
 import { Box, Text, Flex, EditBtn, DeleteBtn } from '../styledSystem';
 import { useDispatch, useSelector } from 'react-redux';
 import Checkbox from './Checkbox';
+import ConfirmationModal from './ConfirmationModal';
 import { actions } from '../store/actions/action';
-import ConfirmationModal from './ConfirmModal';
 
 const ToDoItem = ({ todo }) => {
 	const dispatch = useDispatch();
 	const edit = useSelector((state) => state.edit);
+	const item = useSelector((state) => state.item);
 	const showModal = useSelector((state) => state.showModal);
-	
+
 	const openConfirm = () => {
 		dispatch(actions.showModal(true));
 		dispatch(actions.setItem(todo));
@@ -34,16 +35,17 @@ const ToDoItem = ({ todo }) => {
 				<Text color={'rgba(127, 110, 96, 1)'} complete={todo.completed}>
 					{todo.title}
 				</Text>
-				<Box width={'60px'} margin={'0 0 0 auto'}>
-					{!edit && (
+				{item.id === todo.id && <Text color={'blacks.2'} marginLeft='auto'>edit...</Text>}
+				{!edit && (
+					<Box width={'60px'} margin={'0 0 0 auto'}>
 						<Flex flexDirection={'row'} justifyContent={'flex-end'}>
 							{!todo.completed && (
 								<EditBtn onClick={() => dispatch(actions.setEdit(todo))} />
 							)}
 							<DeleteBtn onClick={openConfirm} />
 						</Flex>
-					)}
-				</Box>
+					</Box>
+				)}
 			</Flex>
 			{showModal && (
 				<ConfirmationModal message='Are you sure you want to delete this item?' />
