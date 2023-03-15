@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../store/actions/action';
 import { titleSelector } from '../../store/selectors/selector';
+import { nanoid } from 'nanoid';
 
 export function useSidenav() {
 	const dispatch = useDispatch();
@@ -21,7 +22,15 @@ export function useSidenav() {
 			dispatch(actions.editTodo(value.todoTitle));
 			return;
 		}
-		dispatch(actions.addTodo(value.todoTitle));
+
+		const newTodo = {
+			userId: 1,
+			id: nanoid(),
+			title: value.todoTitle,
+			completed: false,
+		};
+
+		dispatch(actions.addTodo(newTodo));
 		action.resetForm();
 	};
 

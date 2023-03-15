@@ -1,5 +1,4 @@
 import { actions } from '../actions/action';
-import { nanoid } from 'nanoid';
 import * as R from 'ramda';
 import { createReducer } from 'redux-act';
 
@@ -15,28 +14,16 @@ const initialState = {
 
 const todosReducer = createReducer(
 	{
-		[actions.addTodo]: (state, payload) => {
-			const newItem = {
-				userId: 1,
-				id: nanoid(),
-				title: payload,
-				completed: false,
-			};
-
-			return {
-				...state,
-				items: [newItem, ...state.items],
-				title: '',
-			};
-		},
-		[actions.deleteTodo]: (state, payload) => {
-			console.log('payload', payload);
-			return {
-				...state,
-				items: R.filter((item) => item.id !== payload.id, state.items),
-				item: {},
-			};
-		},
+		[actions.addTodo]: (state, payload) => ({
+			...state,
+			items: [payload, ...state.items],
+			title: '',
+		}),
+		[actions.deleteTodo]: (state, payload) => ({
+			...state,
+			items: R.filter((item) => item.id !== payload.id, state.items),
+			item: {},
+		}),
 		[actions.editTodo]: (state, payload) => {
 			const newList = [...state.items];
 			const index = R.indexOf(state.item, newList);
@@ -46,7 +33,7 @@ const todosReducer = createReducer(
 					...state,
 					item: {},
 					edit: false,
-					items: newList,
+					items: [...newList],
 				};
 			} else {
 				return {
@@ -71,7 +58,7 @@ const todosReducer = createReducer(
 				return {
 					...state,
 					item: {},
-					items: todos,
+					items: [...todos],
 				};
 			}
 			return {
