@@ -7,9 +7,9 @@ import { actions } from '../store/actions/action';
 
 const ToDoItem = ({ todo }) => {
 	const dispatch = useDispatch();
-	const edit = useSelector((state) => state.edit);
-	const item = useSelector((state) => state.item);
-	const showModal = useSelector((state) => state.showModal);
+	const edit = useSelector((state) => state.todos.edit);
+	const item = useSelector((state) => state.todos.item);
+	const showModal = useSelector((state) => state.modal.showModal);
 
 	const openConfirm = () => {
 		dispatch(actions.showModal(true));

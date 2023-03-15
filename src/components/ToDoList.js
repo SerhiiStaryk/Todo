@@ -43,7 +43,7 @@ const TodoListBox = styled.div`
 const TodoList = () => {
 	const dispatch = useDispatch();
 	const todos = useSelector(filteredTodosSelector);
-	const spinner = useSelector((state) => state.showSpinner);
+	const spinner = useSelector((state) => state.spinner.showSpinner);
 
 	React.useEffect(() => {
 		dispatch(actions.fetchTodosReguest());

@@ -11,11 +11,9 @@ const initialState = {
 		completed: false,
 		inProgress: false,
 	},
-	showModal: false,
-	showSpinner: false,
 };
 
-const reducer = createReducer(
+const todosReducer = createReducer(
 	{
 		[actions.addTodo]: (state, payload) => {
 			const newItem = {
@@ -31,11 +29,14 @@ const reducer = createReducer(
 				title: '',
 			};
 		},
-		[actions.deleteTodo]: (state, payload) => ({
-			...state,
-			items: R.filter((item) => item.id !== payload.id, state.items),
-			item: {},
-		}),
+		[actions.deleteTodo]: (state, payload) => {
+			console.log('payload', payload);
+			return {
+				...state,
+				items: R.filter((item) => item.id !== payload.id, state.items),
+				item: {},
+			};
+		},
 		[actions.editTodo]: (state, payload) => {
 			const newList = [...state.items];
 			const index = R.indexOf(state.item, newList);
@@ -58,10 +59,6 @@ const reducer = createReducer(
 			item: payload,
 			edit: true,
 		}),
-		[actions.setTitle]: (state, payload) => ({
-			...state,
-			title: payload,
-		}),
 		[actions.setFilters]: (state, payload) => ({ ...state, filters: payload }),
 		[actions.fetchTodosSuccess]: (state, payload) => {
 			return { ...state, items: payload };
@@ -81,32 +78,14 @@ const reducer = createReducer(
 				...state,
 			};
 		},
-		[actions.showModal]: (state) => {
-			return {
-				...state,
-				showModal: true,
-			};
-		},
-		[actions.hideModal]: (state) => {
-			return {
-				...state,
-				showModal: false,
-			};
-		},
 		[actions.setItem]: (state, payload) => {
 			return {
 				...state,
 				item: payload,
 			};
 		},
-		[actions.setSpinner]: (state, payload) => {
-			return {
-				...state,
-				showSpinner: payload,
-			};
-		},
 	},
 	initialState
 );
 
-export default reducer;
+export default todosReducer;

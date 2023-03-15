@@ -1,9 +1,13 @@
 import { createSelector } from 'reselect';
 import * as R from 'ramda';
 
-const todoSelector = (state) => state.items;
-const filterSelector = (state) => state.filters;
-const itemSelector = (state) => state.item;
+const todoSelector = (state) => {
+	return state.todos.items
+};
+
+const filterSelector = (state) => state.todos.filters;
+const itemSelector = (state) => state.todos.item;
+const editSelector = (state) => state.todos.edit;
 
 export const filteredTodosSelector = createSelector(
 	[todoSelector, filterSelector],
@@ -21,6 +25,6 @@ export const filteredTodosSelector = createSelector(
 );
 
 export const titleSelector = createSelector(
-	[itemSelector],
-	(item) => item.title ? item.title: ''
+	[itemSelector, editSelector],
+	(item, isEdit) => item.title && isEdit ? item.title: ''
 )

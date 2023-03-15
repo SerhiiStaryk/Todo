@@ -6,7 +6,7 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import { sagaWatcher } from './store/saga';
 import theme from './theme';
 import Main from './components/Main';
-import reducer from './store/reducers/reducer';
+import reducer from './store/reducers/';
 import createSagaMiddleware from '@redux-saga/core';
 
 const saga = createSagaMiddleware();

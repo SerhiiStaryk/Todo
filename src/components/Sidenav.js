@@ -18,8 +18,8 @@ import { titleSelector } from '../store/selectors/selector';
 const Sidenav = () => {
 	const dispatch = useDispatch();
 
-	const filters = useSelector((state) => state.filters);
-	const edit = useSelector((state) => state.edit);
+	const filters = useSelector((state) => state.todos.filters);
+	const edit = useSelector((state) => state.todos.edit);
 	const title = useSelector(titleSelector);
 
 	const handleCheckbox = (name) => {

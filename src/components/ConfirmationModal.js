@@ -30,7 +30,7 @@ const ButtonWrapper = styled.div`
 
 const ConfirmationModal = ({ message }) => {
 	const dispatch = useDispatch();
-	const item = useSelector((state) => state.item);
+	const item = useSelector((state) => state.todos.item);
 
 	const handleConfirm = () => {
 		dispatch(actions.deleteTodo(item));
