@@ -1,7 +1,7 @@
-import { GridColumns, MainContainer } from '../styledSystem';
-import Sidenav from './Sidenav';
-import TodoList from './ToDoList';
-import React from 'react';
+import { GridColumns, MainContainer } from '../../styledSystem';
+
+import Sidenav from '../Sidenav/Sidenav';
+import TodoList from '../TodoList/ToDoList';
 
 const Main = () => {
 	return (

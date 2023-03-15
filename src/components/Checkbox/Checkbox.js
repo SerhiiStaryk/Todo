@@ -1,17 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Flex } from '../styledSystem';
 
-const Input = styled.input.attrs({ type: 'checkbox' })`
-	margin-right: 8px;
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-`;
-
-const LabelText = styled.label`
-	color: #fff;
-`;
+import { Flex } from '../../styledSystem';
+import { Input, LabelText } from './styles';
 
 const Checkbox = ({ checked, handleCheckboxChange, name, text }) => {
 	return (

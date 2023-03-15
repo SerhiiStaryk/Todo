@@ -1,4 +1,6 @@
 import React from 'react';
+import { Formik, Form } from 'formik';
+
 import {
 	Button,
 	Text,
@@ -6,37 +8,15 @@ import {
 	Content,
 	Logo,
 	FilterMedia,
-} from '../styledSystem';
-import Checkbox from './Checkbox';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../store/actions/action';
-import { Formik, Form } from 'formik';
-import titleSchema from '../schemas/titleSchema';
-import Input from './Input';
-import { titleSelector } from '../store/selectors/selector';
+} from '../../styledSystem';
+import titleSchema from '../../schemas/titleSchema';
+
+import Checkbox from '../Checkbox/Checkbox';
+import Input from '../Input/Input';
+import { useSidenav } from './useSidenav';
 
 const Sidenav = () => {
-	const dispatch = useDispatch();
-
-	const filters = useSelector((state) => state.todos.filters);
-	const edit = useSelector((state) => state.todos.edit);
-	const title = useSelector(titleSelector);
-
-	const handleCheckbox = (name) => {
-		const newFilter = { ...filters };
-		newFilter[name] = !filters[name];
-
-		dispatch(actions.setFilters(newFilter));
-	};
-
-	const onSubmit = (value, action) => {
-		if (edit) {
-			dispatch(actions.editTodo(value.todoTitle));
-			return;
-		}
-		dispatch(actions.addTodo(value.todoTitle));
-		action.resetForm();
-	};
+	const { title, filters, edit, handleCheckbox, onSubmit } = useSidenav();
 
 	return (
 		<Content>

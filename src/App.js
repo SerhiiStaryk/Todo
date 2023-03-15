@@ -1,13 +1,16 @@
 import './App.css';
+
 import { ThemeProvider } from 'styled-components';
 import { Flex, Root } from './styledSystem';
-import { Provider } from 'react-redux';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { sagaWatcher } from './store/saga';
 import theme from './theme';
-import Main from './components/Main';
-import reducer from './store/reducers/';
+
+import { compose, createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from '@redux-saga/core';
+import { Provider } from 'react-redux';
+import { sagaWatcher } from './store/saga';
+import reducer from './store/reducers/';
+
+import Main from './components/Main/Main';
 
 const saga = createSagaMiddleware();
 
