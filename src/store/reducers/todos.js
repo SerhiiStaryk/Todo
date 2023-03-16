@@ -12,12 +12,17 @@ const initialState = {
 	},
 };
 
+function updateObject(oldObject, newValues) {
+	return Object.assign({}, oldObject, newValues);
+}
+
 const todosReducer = createReducer(
 	{
-		[actions.addTodo]: (state, payload) => ({
-			...state,
-			items: [payload, ...state.items],
-		}),
+		[actions.addTodo]: (state, payload) => {
+			const newTodos = [payload, ...state.items];
+
+			return updateObject(state, { items: newTodos });
+		},
 
 		[actions.deleteTodo]: (state, payload) => ({
 			...state,
