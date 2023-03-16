@@ -1,6 +1,41 @@
 import { actions } from '../actions/action';
-import * as R from 'ramda';
 import { createReducer } from 'redux-act';
+import { removeItemFromArray, updateItemInArray, updateObject } from '../utils';
+
+const addTodo = (state, payload) => {
+	const newTodos = [payload, ...state.todos];
+	return updateObject(state, { todos: newTodos });
+};
+
+const deleteTodo = (state, payload) => {
+	const todos = removeItemFromArray(state.todos, payload);
+	return updateObject(state, { todos, todo: {} });
+};
+
+const editTodo = (state, payload) => {
+	const todos = updateItemInArray(state.todos, payload.id, (todo) =>
+		updateObject(todo, { title: payload.title })
+	);
+	return updateObject(state, { todos, edit: false, todo: {} });
+};
+
+const setEdit = (state, payload) =>
+	updateObject(state, { todo: payload, edit: true });
+
+const setFilters = (state, payload) =>
+	updateObject(state, { filters: payload });
+
+const fetchTodosSuccess = (state, payload) =>
+	updateObject(state, { todos: payload });
+
+const setCompleted = (state, payload) => {
+	const todos = updateItemInArray(state.todos, payload, (todo) =>
+		updateObject(todo, { completed: !todo.completed })
+	);
+	return updateObject(state, { todos, todo: {} });
+};
+
+const setTodo = (state, payload) => updateObject(state, { todo: payload });
 
 const initialState = {
 	todos: [],
@@ -12,77 +47,17 @@ const initialState = {
 	},
 };
 
-function updateObject(oldObject, newValues) {
-	return Object.assign({}, oldObject, newValues);
-}
-
 const todosReducer = createReducer(
 	{
-		[actions.addTodo]: (state, payload) => {
-			const newTodos = [payload, ...state.todos];
-
-			return updateObject(state, { todos: newTodos });
-		},
-
-		[actions.deleteTodo]: (state, payload) => {
-			return {
-				...state,
-				todos: R.filter((item) => item.id !== payload.id, state.todos),
-				todo: {},
-			};
-		},
-
-		[actions.editTodo]: (state, payload) => {
-			const newList = [...state.todos];
-			const index = R.indexOf(state.todo, newList);
-			if (index !== -1) {
-				newList[index].title = payload;
-				return {
-					...state,
-					todo: {},
-					edit: false,
-					todos: [...newList],
-				};
-			} else {
-				return {
-					...state,
-				};
-			}
-		},
-
-		[actions.setEdit]: (state, payload) => ({
-			...state,
-			todo: payload,
-			edit: true,
-		}),
-
-		[actions.setFilters]: (state, payload) => ({ ...state, filters: payload }),
-
-		[actions.fetchTodosSuccess]: (state, payload) => ({
-			...state,
-			todos: payload,
-		}),
-
-		[actions.setCompleted]: (state, payload) => {
-			const todos = [...state.todos];
-			const i = R.indexOf(payload, todos);
-			if (i !== -1) {
-				todos[i].completed = !payload.completed;
-				return {
-					...state,
-					todo: {},
-					todos: [...todos],
-				};
-			}
-			return {
-				...state,
-			};
-		},
-
-		[actions.setTodo]: (state, payload) => ({
-			...state,
-			todo: payload,
-		}),
+		[actions.fetchTodosSuccess]: (state, payload) =>
+			fetchTodosSuccess(state, payload),
+		[actions.addTodo]: (state, payload) => addTodo(state, payload),
+		[actions.deleteTodo]: (state, payload) => deleteTodo(state, payload),
+		[actions.editTodo]: (state, payload) => editTodo(state, payload),
+		[actions.setCompleted]: (state, payload) => setCompleted(state, payload),
+		[actions.setFilters]: (state, payload) => setFilters(state, payload),
+		[actions.setEdit]: (state, payload) => setEdit(state, payload), //remove from state
+		[actions.setTodo]: (state, payload) => setTodo(state, payload), //remove from state
 	},
 	initialState
 );

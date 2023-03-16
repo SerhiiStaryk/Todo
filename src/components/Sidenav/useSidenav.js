@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../store/actions/action';
-import { titleSelector } from '../../store/selectors/selector';
+import { idSelector, titleSelector } from '../../store/selectors/selector';
 import { nanoid } from 'nanoid';
 
 export function useSidenav() {
@@ -9,6 +9,7 @@ export function useSidenav() {
 	const filters = useSelector((state) => state.todos.filters);
 	const edit = useSelector((state) => state.todos.edit);
 	const title = useSelector(titleSelector);
+	const id = useSelector(idSelector);
 
 	const handleCheckbox = (name) => {
 		const newFilter = { ...filters };
@@ -19,7 +20,7 @@ export function useSidenav() {
 
 	const onSubmit = (value, action) => {
 		if (edit) {
-			dispatch(actions.editTodo(value.todoTitle));
+			dispatch(actions.editTodo({ id, title: value.todoTitle }));
 			return;
 		}
 

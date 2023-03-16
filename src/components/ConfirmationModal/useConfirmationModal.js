@@ -6,7 +6,7 @@ export function useConfirmationModal() {
 	const item = useSelector((state) => state.todos.todo);
 
 	const handleConfirm = () => {
-		dispatch(actions.deleteTodo(item));
+		dispatch(actions.deleteTodo(item.id));
 		dispatch(actions.hideModal());
 	};
 

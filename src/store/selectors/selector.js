@@ -27,4 +27,10 @@ export const filteredTodosSelector = createSelector(
 export const titleSelector = createSelector(
 	[itemSelector, editSelector],
 	(item, isEdit) => item.title && isEdit ? item.title: ''
-)
+)//remove this
+
+export const idSelector = createSelector(
+	[itemSelector, editSelector],
+	(item, isEdit) => item.title && isEdit ? item.id: ''
+)//remove this
+

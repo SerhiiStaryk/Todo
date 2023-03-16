@@ -26,7 +26,7 @@ const ToDoItem = ({ todo }) => {
 				{!edit && (
 					<Checkbox
 						checked={todo.completed}
-						handleCheckboxChange={() => dispatch(actions.setCompleted(todo))}
+						handleCheckboxChange={() => dispatch(actions.setCompleted(todo.id))}
 					/>
 				)}
 				<Text color={'rgba(127, 110, 96, 1)'} complete={todo.completed}>
