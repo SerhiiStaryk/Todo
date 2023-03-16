@@ -10,6 +10,6 @@ export const SET_COMPLETED = 'SET_COMPLETED';
 
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
-export const SET_ITEM = 'SET_ITEM';
+export const SET_TODO = 'SET_TODO';
 
 export const SET_SPINNER = 'SET_SPINNER';

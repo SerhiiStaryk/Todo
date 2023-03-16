@@ -3,8 +3,8 @@ import * as R from 'ramda';
 import { createReducer } from 'redux-act';
 
 const initialState = {
-	items: [],
-	item: {},
+	todos: [],
+	todo: {},
 	edit: false,
 	filters: {
 		completed: false,
@@ -19,27 +19,29 @@ function updateObject(oldObject, newValues) {
 const todosReducer = createReducer(
 	{
 		[actions.addTodo]: (state, payload) => {
-			const newTodos = [payload, ...state.items];
+			const newTodos = [payload, ...state.todos];
 
-			return updateObject(state, { items: newTodos });
+			return updateObject(state, { todos: newTodos });
 		},
 
-		[actions.deleteTodo]: (state, payload) => ({
-			...state,
-			items: R.filter((item) => item.id !== payload.id, state.items),
-			item: {},
-		}),
+		[actions.deleteTodo]: (state, payload) => {
+			return {
+				...state,
+				todos: R.filter((item) => item.id !== payload.id, state.todos),
+				todo: {},
+			};
+		},
 
 		[actions.editTodo]: (state, payload) => {
-			const newList = [...state.items];
-			const index = R.indexOf(state.item, newList);
+			const newList = [...state.todos];
+			const index = R.indexOf(state.todo, newList);
 			if (index !== -1) {
 				newList[index].title = payload;
 				return {
 					...state,
-					item: {},
+					todo: {},
 					edit: false,
-					items: [...newList],
+					todos: [...newList],
 				};
 			} else {
 				return {
@@ -50,7 +52,7 @@ const todosReducer = createReducer(
 
 		[actions.setEdit]: (state, payload) => ({
 			...state,
-			item: payload,
+			todo: payload,
 			edit: true,
 		}),
 
@@ -58,18 +60,18 @@ const todosReducer = createReducer(
 
 		[actions.fetchTodosSuccess]: (state, payload) => ({
 			...state,
-			items: payload,
+			todos: payload,
 		}),
 
 		[actions.setCompleted]: (state, payload) => {
-			const todos = [...state.items];
+			const todos = [...state.todos];
 			const i = R.indexOf(payload, todos);
 			if (i !== -1) {
 				todos[i].completed = !payload.completed;
 				return {
 					...state,
-					item: {},
-					items: [...todos],
+					todo: {},
+					todos: [...todos],
 				};
 			}
 			return {
@@ -77,9 +79,9 @@ const todosReducer = createReducer(
 			};
 		},
 
-		[actions.setItem]: (state, payload) => ({
+		[actions.setTodo]: (state, payload) => ({
 			...state,
-			item: payload,
+			todo: payload,
 		}),
 	},
 	initialState

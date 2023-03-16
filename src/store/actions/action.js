@@ -11,8 +11,8 @@ import {
 	EDIT_TODO,
 	SHOW_MODAL,
 	HIDE_MODAL,
-	SET_ITEM,
 	SET_SPINNER,
+	SET_TODO,
 } from './actionTypes';
 
 export const actions = {
@@ -27,6 +27,6 @@ export const actions = {
 	setCompleted: createAction(SET_COMPLETED),
 	showModal: createAction(SHOW_MODAL),
 	hideModal: createAction(HIDE_MODAL),
-	setItem: createAction(SET_ITEM),
+	setTodo: createAction(SET_TODO),
 	setSpinner: createAction(SET_SPINNER),
 };

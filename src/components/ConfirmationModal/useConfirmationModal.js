@@ -3,7 +3,7 @@ import { actions } from '../../store/actions/action';
 
 export function useConfirmationModal() {
 	const dispatch = useDispatch();
-	const item = useSelector((state) => state.todos.item);
+	const item = useSelector((state) => state.todos.todo);
 
 	const handleConfirm = () => {
 		dispatch(actions.deleteTodo(item));
@@ -12,7 +12,7 @@ export function useConfirmationModal() {
 
 	const handleCancel = () => {
 		dispatch(actions.hideModal());
-		dispatch(actions.setItem({}));
+		dispatch(actions.setTodo({}));
 	};
 
 	return { handleConfirm, handleCancel };
