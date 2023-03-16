@@ -3,7 +3,7 @@ import * as R from 'ramda';
 
 import { Flex, Text } from '../../styledSystem';
 
-import ToDoItem from '../TodoItem/ToDoItem';
+import TodoItem from '../TodoItem/TodoItem';
 import Spinner from '../Spinner/Spinner';
 import { TodoContainer, TodoListBox } from './styles';
 import { useTodoList } from './useTodoList';
@@ -29,7 +29,7 @@ const TodoList = () => {
 					) : (
 						<>
 							{todos.length ? (
-								R.map((item) => <ToDoItem key={item.id} todo={item} />, todos)
+								R.map((item) => <TodoItem key={item.id} todo={item} />, todos)
 							) : (
 								<Text textAlign='center' color={'blacks.3'}>
 									Empty list

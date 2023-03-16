@@ -9,7 +9,7 @@ import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import Checkbox from '../Checkbox/Checkbox';
 import { useTodoItem } from './useTodoItem';
 
-const ToDoItem = ({ todo }) => {
+const TodoItem = ({ todo }) => {
 	const { edit, item, showModal, openConfirm } = useTodoItem(todo);
 	const dispatch = useDispatch();
 
@@ -55,4 +55,4 @@ const ToDoItem = ({ todo }) => {
 	);
 };
 
-export default ToDoItem;
+export default TodoItem;
