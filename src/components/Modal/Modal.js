@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Overlay = styled.div`
+const Overlay = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -12,15 +12,24 @@ export const Overlay = styled.div`
 	background-color: rgba(0, 0, 0, 0.2);
 `;
 
-export const Modal = styled.div`
+const ModalWindow = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	background-color: #fff;
 	border-radius: 8px;
 	padding: 24px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 `;
 
-export const ButtonWrapper = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	mask-type: 16px;
-`;
+const Modal = ({ children, closeHandler }) => {
+	return (
+		<>
+			<Overlay onClick={closeHandler} />
+			<ModalWindow>{children}</ModalWindow>
+		</>
+	);
+};
+
+export default Modal;

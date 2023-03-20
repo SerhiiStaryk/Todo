@@ -11,6 +11,7 @@ import { sagaWatcher } from './store/saga';
 import reducer from './store/reducers/';
 
 import Main from './components/Main/Main';
+import { ModalState } from './Context/ModalContext';
 
 const saga = createSagaMiddleware();
 
@@ -28,13 +29,15 @@ function App() {
 	return (
 		<div className='App'>
 			<Provider store={store}>
-				<ThemeProvider theme={theme}>
-					<Root>
-						<Flex justifyContent={'center'}>
-							<Main />
-						</Flex>
-					</Root>
-				</ThemeProvider>
+				<ModalState>
+					<ThemeProvider theme={theme}>
+						<Root>
+							<Flex justifyContent={'center'}>
+								<Main />
+							</Flex>
+						</Root>
+					</ThemeProvider>
+				</ModalState>
 			</Provider>
 		</div>
 	);
