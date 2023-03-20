@@ -1,6 +1,5 @@
 import { createAction } from 'redux-act';
 import {
-	SET_TITLE,
 	SET_EDIT,
 	SET_FILTERS,
 	SET_COMPLETED,
@@ -12,8 +11,8 @@ import {
 	EDIT_TODO,
 	SHOW_MODAL,
 	HIDE_MODAL,
-	SET_ITEM,
 	SET_SPINNER,
+	SET_TODO,
 } from './actionTypes';
 
 export const actions = {
@@ -24,11 +23,10 @@ export const actions = {
 	deleteTodo: createAction(DELETE_TODO),
 	editTodo: createAction(EDIT_TODO),
 	setEdit: createAction(SET_EDIT),
-	setTitle: createAction(SET_TITLE),
 	setFilters: createAction(SET_FILTERS),
 	setCompleted: createAction(SET_COMPLETED),
 	showModal: createAction(SHOW_MODAL),
 	hideModal: createAction(HIDE_MODAL),
-	setItem: createAction(SET_ITEM),
+	setTodo: createAction(SET_TODO),
 	setSpinner: createAction(SET_SPINNER),
 };

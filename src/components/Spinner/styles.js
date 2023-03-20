@@ -8,7 +8,7 @@ const spin = keyframes`
   transform: rotate(360deg);
 }`;
 
-const StyledSpinner = styled.div`
+export const StyledSpinner = styled.div`
 	border: 4px solid rgba(0, 0, 0, 0.1);
 	border-left-color: #af6544;
 	border-radius: 50%;
@@ -16,7 +16,3 @@ const StyledSpinner = styled.div`
 	height: 50px;
 	animation: ${spin} 1s linear infinite;
 `;
-
-const Spinner = () => <StyledSpinner />;
-
-export default Spinner;

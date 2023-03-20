@@ -1,21 +1,24 @@
 import './App.css';
+
 import { ThemeProvider } from 'styled-components';
 import { Flex, Root } from './styledSystem';
-import { Provider } from 'react-redux';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { sagaWatcher } from './store/saga';
 import theme from './theme';
-import Main from './components/Main';
-import reducer from './store/reducers/reducer';
-import thunk from 'redux-thunk';
+
+import { compose, createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from '@redux-saga/core';
+import { Provider } from 'react-redux';
+import { sagaWatcher } from './store/saga';
+import reducer from './store/reducers/';
+
+import Main from './components/Main/Main';
+import { ModalState } from './Context/ModalContext';
 
 const saga = createSagaMiddleware();
 
 const store = createStore(
 	reducer,
 	compose(
-		applyMiddleware(thunk, saga),
+		applyMiddleware(saga),
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	)
 );
@@ -26,13 +29,15 @@ function App() {
 	return (
 		<div className='App'>
 			<Provider store={store}>
-				<ThemeProvider theme={theme}>
-					<Root>
-						<Flex justifyContent={'center'}>
-							<Main />
-						</Flex>
-					</Root>
-				</ThemeProvider>
+				<ModalState>
+					<ThemeProvider theme={theme}>
+						<Root>
+							<Flex justifyContent={'center'}>
+								<Main />
+							</Flex>
+						</Root>
+					</ThemeProvider>
+				</ModalState>
 			</Provider>
 		</div>
 	);

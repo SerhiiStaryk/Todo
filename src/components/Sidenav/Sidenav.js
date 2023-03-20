@@ -1,4 +1,6 @@
 import React from 'react';
+import { Formik, Form } from 'formik';
+
 import {
 	Button,
 	Text,
@@ -6,43 +8,15 @@ import {
 	Content,
 	Logo,
 	FilterMedia,
-} from '../styledSystem';
-import Checkbox from './Checkbox';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../store/actions/action';
-import { Formik, Form } from 'formik';
-import titleSchema from '../schemas/titleSchema';
-import Input from './Input';
+} from '../../styledSystem';
+import titleSchema from '../../schemas/titleSchema';
+
+import Checkbox from '../Checkbox/Checkbox';
+import Input from '../Input/Input';
+import { useSidenav } from './useSidenav';
 
 const Sidenav = () => {
-	const dispatch = useDispatch();
-
-	const filters = useSelector((state) => state.filters);
-	const title = useSelector((state) => state.title);
-	const edit = useSelector((state) => state.edit);
-
-	const handleCheckbox = (name) => {
-		const newFilter = { ...filters };
-		if (name === 'inProgress') {
-			newFilter.inProgress = !filters.inProgress;
-		}
-
-		if (name === 'completed') {
-			newFilter.completed = !filters.completed;
-		}
-
-		dispatch(actions.setFilters(newFilter));
-	};
-
-	const onSubmit = (value, action) => {
-		console.log(value);
-		if (edit) {
-			dispatch(actions.editTodo(value.todoTitle));
-			return;
-		}
-		dispatch(actions.addTodo(value.todoTitle));
-		action.resetForm();
-	};
+	const { title, filters, edit, handleCheckbox, onSubmit } = useSidenav();
 
 	return (
 		<Content>
@@ -67,7 +41,10 @@ const Sidenav = () => {
 								type='text'
 								placeholder='Type todo title...'
 							></Input>
-							<Button disabled={props.isValid && props.isValidating} type='submit'>
+							<Button
+								disabled={props.isValid && props.isValidating}
+								type='submit'
+							>
 								{edit ? 'Save' : 'Add new todo'}
 							</Button>
 						</Form>

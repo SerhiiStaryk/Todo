@@ -1,20 +1,36 @@
 import { createSelector } from 'reselect';
 import * as R from 'ramda';
 
-const todoSelector = (state) => state.items;
-const filterSelector = (state) => state.filters;
+const todoSelector = (state) => {
+	return state.todos.todos
+};
+
+const filterSelector = (state) => state.todos.filters;
+const itemSelector = (state) => state.todos.todo;
+const editSelector = (state) => state.todos.edit;
 
 export const filteredTodosSelector = createSelector(
 	[todoSelector, filterSelector],
 	(items, filters) => {
 		if (filters.completed && !filters.inProgress) {
-			return items.filter((todo) => todo.completed);
+			return R.filter((todo) => todo.completed, items);
 		}
     
     if (filters.inProgress && !filters.completed) {
-			return items.filter((todo) => !todo.completed);
+			return R.filter((todo) => !todo.completed, items);
 		}
 
 		return items;
 	}
 );
+
+export const titleSelector = createSelector(
+	[itemSelector, editSelector],
+	(item, isEdit) => item.title && isEdit ? item.title: ''
+)//remove this
+
+export const idSelector = createSelector(
+	[itemSelector, editSelector],
+	(item, isEdit) => item.title && isEdit ? item.id: ''
+)//remove this
+

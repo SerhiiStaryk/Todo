@@ -18,8 +18,6 @@ function* sagaWorker() {
 }
 
 async function fetchTodo() {
-	const response = await fetch(
-		'https://jsonplaceholder.typicode.com/todos?_limit=5'
-	);
+	const response = await fetch(`${process.env.REACT_APP_BASE_URL}?_limit=5`);
 	return await response.json();
 }
