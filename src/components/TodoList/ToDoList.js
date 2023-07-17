@@ -3,10 +3,10 @@ import * as R from 'ramda';
 
 import { Flex, Text } from '../../styledSystem';
 
-import TodoItem from '../TodoItem/TodoItem';
 import Spinner from '../Spinner/Spinner';
 import { TodoContainer, TodoListBox } from './styles';
 import { useTodoList } from './useTodoList';
+import TodoItem  from '../TodoItem/ToDoItem';
 
 const TodoList = () => {
 	const { todos, spinner } = useTodoList();
