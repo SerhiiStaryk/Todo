@@ -1,23 +1,26 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { FETCH_TODOS_REQUEST } from './actions/actionTypes';
-import { actions } from './actions/action';
 
-export function* sagaWatcher() {
-	yield takeLatest(FETCH_TODOS_REQUEST, sagaWorker);
-}
+import { fetchTodo } from './utils';
+import { FETCH_TODO_LIST_REQUEST } from './actions/actionTypes';
+import { fetchTodoListFailure, fetchTodoListSuccess, setSpinner } from './actions';
+
 
 function* sagaWorker() {
 	try {
-		yield put(actions.setSpinner(true))
-		const todos = yield call(fetchTodo);
-		yield put(actions.fetchTodosSuccess(todos));
-		yield put(actions.setSpinner(false))
+		yield put(setSpinner(true))
+
+		const todoList = yield call(fetchTodo);
+
+		yield put(fetchTodoListSuccess(todoList));
 	} catch (error) {
-		yield put(actions.fetchTodosFailure(error))
+		yield put(fetchTodoListFailure(error))
+	} finally {
+		yield put(setSpinner(false))
 	}
 }
 
-async function fetchTodo() {
-	const response = await fetch(`${process.env.REACT_APP_BASE_URL}?_limit=5`);
-	return await response.json();
+function* sagaWatcher() {
+	yield takeLatest(FETCH_TODO_LIST_REQUEST, sagaWorker);
 }
+
+export { sagaWatcher }

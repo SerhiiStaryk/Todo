@@ -1,17 +1,14 @@
-import './App.css';
-
-import { ThemeProvider } from 'styled-components';
-import { Flex, Root } from './styledSystem';
-import theme from './theme';
-
-import { compose, createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from '@redux-saga/core';
 import { Provider } from 'react-redux';
-import { sagaWatcher } from './store/saga';
-import reducer from './store/reducers/';
+import { ThemeProvider } from 'styled-components';
+import createSagaMiddleware from '@redux-saga/core';
+import { compose, createStore, applyMiddleware } from 'redux';
 
-import Main from './components/Main/Main';
-import { ModalState } from './Context/ModalContext';
+import theme from './theme';
+import { Flex, Root } from './ui';
+import Main from './components/main';
+import reducer from './store/reducers/';
+import { sagaWatcher } from './store/saga';
+import { ModalState } from './context/modal-context';
 
 const saga = createSagaMiddleware();
 
@@ -25,22 +22,18 @@ const store = createStore(
 
 saga.run(sagaWatcher);
 
-function App() {
-	return (
-		<div className='App'>
-			<Provider store={store}>
-				<ModalState>
-					<ThemeProvider theme={theme}>
-						<Root>
-							<Flex justifyContent={'center'}>
-								<Main />
-							</Flex>
-						</Root>
-					</ThemeProvider>
-				</ModalState>
-			</Provider>
-		</div>
-	);
-}
+const App = () => (
+	<Provider store={store}>
+		<ModalState>
+			<ThemeProvider theme={theme}>
+				<Root>
+					<Flex justifyContent={'center'}>
+						<Main />
+					</Flex>
+				</Root>
+			</ThemeProvider>
+		</ModalState>
+	</Provider>
+);
 
 export default App;

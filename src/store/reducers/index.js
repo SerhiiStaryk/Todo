@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
+
+import todoReducer from './todo';
 import modalReducer from './modal';
 import spinnerReducer from './spinner';
-import todosReducer from './todos';
 
 const reducer = combineReducers({
-	todos: todosReducer,
+	todo: todoReducer,
 	modal: modalReducer,
 	spinner: spinnerReducer,
 });
