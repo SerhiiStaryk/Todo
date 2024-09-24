@@ -8,10 +8,10 @@ import titleSchema from '../../schemas/title-schema';
 import {
 	Text,
 	Flex,
-	Logo,
 	Button,
 	Content,
 	FilterMedia,
+	AbsoluteBox,
 } from '../../ui';
 
 
@@ -19,39 +19,43 @@ const Sidenav = () => {
 	const { title, filters, edit, handleCheckbox, onSubmit } = useSidenav();
 
 	return (
-		<Content>
-			<Logo>
-				<Text textAlign='center' color={'whites.7'} fontSize={[0, 1, 2, 3]}>
+		<Content pt={70} px={15}>
+			<AbsoluteBox
+				py={15}
+				top={-10}
+				right={-10}
+				width='85%'
+				borderRadius={10}
+			>
+				<Text textAlign='center' color='whites.7' fontSize={[0, 1, 2, 3]}>
 					TODO
 				</Text>
-			</Logo>
-
+			</AbsoluteBox>
 			<Formik
-				initialValues={{ todoTitle: `${title}` }}
-				validationSchema={titleSchema}
 				onSubmit={onSubmit}
 				enableReinitialize={true}
+				validationSchema={titleSchema}
+				initialValues={{ todoTitle: `${title}` }}
 			>
 				{props => (
 					<Form>
 						<Input
-							label='New Todo'
-							name='todoTitle'
 							type='text'
+							name='todoTitle'
+							label='New Todo'
 							placeholder='Type todo title...'
-						></Input>
+						/>
 						<Button
-							disabled={props.isValid && props.isValidating}
 							type='submit'
+							disabled={props.isValid && props.isValidating}
 						>
 							{edit ? 'Save' : 'Add new todo'}
 						</Button>
 					</Form>
 				)}
 			</Formik>
-
-			<Flex flexDirection={'column'}>
-				<Text color={'whites.7'} margin={'0 0 10px'}>
+			<Flex flexDirection='column'>
+				<Text color='whites.7' mb={10}>
 					Filter:
 				</Text>
 				<FilterMedia>
@@ -69,7 +73,7 @@ const Sidenav = () => {
 					/>
 				</FilterMedia>
 			</Flex>
-		</Content>
+		</Content >
 	);
 };
 

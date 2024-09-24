@@ -9,7 +9,8 @@ const Overlay = styled.div`
 	position: absolute;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.2);
+	background: #000000;
+  opacity: 0.1;
 `;
 
 const ModalWindow = styled.div`

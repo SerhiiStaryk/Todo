@@ -8,31 +8,32 @@ import { Flex, Root } from './ui';
 import Main from './components/main';
 import reducer from './store/reducers/';
 import { sagaWatcher } from './store/saga';
-import { ModalState } from './context/modal-context';
+import { ModalProvider } from './context/modal-context';
 
 const saga = createSagaMiddleware();
 
 const store = createStore(
 	reducer,
-	compose(
-		applyMiddleware(saga),
-		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-	)
+	compose(applyMiddleware(saga))
 );
 
 saga.run(sagaWatcher);
 
 const App = () => (
 	<Provider store={store}>
-		<ModalState>
+		<ModalProvider>
 			<ThemeProvider theme={theme}>
-				<Root>
-					<Flex justifyContent={'center'}>
+				<Root
+					pt='3%'
+					width='100vw'
+					height='100vh'
+				>
+					<Flex justifyContent='center'>
 						<Main />
 					</Flex>
 				</Root>
 			</ThemeProvider>
-		</ModalState>
+		</ModalProvider>
 	</Provider>
 );
 

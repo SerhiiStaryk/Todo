@@ -1,6 +1,9 @@
+import * as R from 'ramda';
 import styled, { css } from 'styled-components';
 import { Edit, Delete } from '@styled-icons/fluentui-system-regular';
 import {
+	top,
+	right,
 	color,
 	width,
 	height,
@@ -18,18 +21,6 @@ import {
 	gridTemplateColumns,
 } from 'styled-system';
 
-const Root = styled.div`
-	width: 100vw;
-	height: 100vh;
-	padding-top: 3%;
-	background: rgb(127, 110, 96);
-	background: linear-gradient(
-		0deg,
-		rgba(127, 110, 96, 1) 35%,
-		rgba(178, 146, 115, 1) 100%
-	);
-`;
-
 const Box = styled.div`
 	${width}
   ${space}
@@ -41,7 +32,7 @@ const Box = styled.div`
   ${borderRadius}
 `;
 
-const GridColumns = styled.div`
+const GridColumns = styled(Box)`
 	${gridTemplateColumns};
 
   display: grid;
@@ -56,13 +47,10 @@ const Text = styled.p`
 	${margin}
 	${typography};
 
-	${(props) => {
-		return css`
-			{
-				${!props.complete} text-decoration: line-through
-			}
-		`;
-	}}
+	${({ complete }) => css`
+			{${R.not(complete)} text-decoration: line-through}
+		`
+	}
 `;
 
 const Flex = styled(Box)`
@@ -74,46 +62,55 @@ const Flex = styled(Box)`
 `;
 
 const Button = styled.button`
-	color: #fff;
-	width: 100%;
+  ${width}
+  ${space}
+
 	margin: 1em 0;
-	font-size: 1em;
-	display: block;
 	cursor: pointer;
+	border: 2px solid;
 	padding: 0.5em 1em;
 	border-radius: 5px;
-	background: #af6544;
-	display: inline-block;
-	border: 2px solid #fff;
 	transition: all linear 0.5s;
 
-	:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
+	font-size: ${({ theme }) => theme.fontSizes[0]};
+	background:  ${({ theme }) => theme.colors.browns[2]};
+	color: ${({ theme }) => theme.colors.whites[8]};
+
+	:disabled,
+  :hover {
+		opacity: 0.7
 	}
-	:hover {
-		opacity: 0.7;
+
+	:disabled {
+	cursor: not-allowed;
 	}
 `;
+
+Button.defaultProps = {
+	width: '100%',
+}
 
 const EditBtn = styled(Edit)`
 	width: 18px;
 	margin: 3px;
 	cursor: pointer;
-	color: rgba(178, 146, 115, 1);
+
+	color: ${({ theme }) => theme.colors.browns[2]};
 `;
 
 const DeleteBtn = styled(Delete)`
 	width: 18px;
 	margin: 3px;
 	cursor: pointer;
-	color: rgba(178, 146, 115, 1);
+
+	color: ${({ theme }) => theme.colors.browns[2]};
 `;
 
-const Content = styled.div`
-	height: 90vh;
-	position: relative;
-	padding: 70px 15px 0;
+const RelativeBox = styled(Box)`
+  position: relative;
+`;
+
+const Content = styled(RelativeBox)`
 	background: rgb(22, 31, 37);
 	border-top-left-radius: 15px;
 	border-bottom-left-radius: 15px;
@@ -129,15 +126,13 @@ const Content = styled.div`
 	}
 `;
 
-const Logo = styled.div`
-	top: -10px;
-	width: 85%;
-	right: -10px;
-	padding: 15px 0;
-	margin-left: auto;
+const AbsoluteBox = styled(Box)`
+  ${top}
+  ${right}
+
 	position: absolute;
-	border-radius: 9px;
-	background: #af6544;
+
+  background: ${({ theme }) => theme.colors.browns[2]};
 `;
 
 const FilterMedia = styled.div`
@@ -160,10 +155,18 @@ const MainContainer = styled.div`
 	}
 `;
 
+const Root = styled(Box)`
+	background: rgb(127, 110, 96);
+	background: linear-gradient(
+		0deg,
+		rgba(127, 110, 96, 1) 35%,
+		rgba(178, 146, 115, 1) 100%,
+	);
+`;
+
 export {
 	Box,
 	Text,
-	Logo,
 	Flex,
 	Root,
 	Button,
@@ -172,5 +175,6 @@ export {
 	DeleteBtn,
 	GridColumns,
 	FilterMedia,
+	AbsoluteBox,
 	MainContainer,
 }

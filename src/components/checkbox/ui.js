@@ -8,7 +8,7 @@ const Input = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 const LabelText = styled.label`
-	color: #fff;
+	color: ${({ theme }) => theme.colors.whites[8]};
 `;
 
 export {

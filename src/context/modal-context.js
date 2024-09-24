@@ -6,7 +6,7 @@ const ModalContext = createContext({
 	close: () => { },
 });
 
-const ModalState = ({ children }) => {
+const ModalProvider = ({ children }) => {
 	const [modal, setModal] = useState(false);
 
 	const open = () => setModal(true);
@@ -19,4 +19,4 @@ const ModalState = ({ children }) => {
 	);
 };
 
-export { ModalContext, ModalState }
+export { ModalContext, ModalProvider }

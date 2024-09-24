@@ -5,18 +5,21 @@ const InputText = styled.input.attrs({ type: 'text' })`
 	padding: 1em;
 	border: none;
 	border-radius: 3px;
-	background: papayawhip;
 `;
 
 const Label = styled.label`
-	color: #fff;
-	margin-bottom: 12px;
+  margin-left: 5px;
+	margin-bottom: 3px;
 	display: inline-block;
+
+	color: ${({ theme }) => theme.colors.whites[8]};
 `;
 
 const Error = styled.span`
+  margin-left: 5px;
 	font-size: 12px;
-	color: rgb(175, 101, 68);
+
+	color: ${({ theme }) => theme.colors.browns[2]};
 `;
 
 export { InputText, Label, Error }
